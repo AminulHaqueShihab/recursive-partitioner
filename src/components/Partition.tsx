@@ -29,6 +29,7 @@ const Partition: React.FC<PartitionProps> = ({ id, color, onRemove }) => {
 	const handleSplit = (direction: 'V' | 'H') => {
 		const newColor = getRandomColor();
 		setPartitions([...partitions, { id: uuidv4(), color: newColor }]);
+		setPartitions([...partitions, { id: uuidv4(), color: newColor }]);
 		setIsVertical(direction === 'V');
 	};
 
@@ -67,14 +68,20 @@ const Partition: React.FC<PartitionProps> = ({ id, color, onRemove }) => {
 			{partitions.length === 0 ? (
 				<Box flexGrow={1} />
 			) : (
-				partitions.map(partition => (
-					<Partition
-						key={partition.id}
-						id={partition.id}
-						color={partition.color}
-						onRemove={handleRemove}
-					/>
-				))
+				<Box
+					flexGrow={1}
+					display='flex'
+					flexDirection={isVertical ? 'row' : 'column'}
+				>
+					{partitions.map(partition => (
+						<Partition
+							key={partition.id}
+							id={partition.id}
+							color={partition.color}
+							onRemove={handleRemove}
+						/>
+					))}
+				</Box>
 			)}
 		</ResizableBox>
 	);
